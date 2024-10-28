@@ -1,0 +1,3 @@
+C:/Users/vboxuser/CLionProjects/TrabalhoPP/cmake-build-debug/CMakeFiles/TrabalhoPP.dir
+C:/Users/vboxuser/CLionProjects/TrabalhoPP/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/vboxuser/CLionProjects/TrabalhoPP/cmake-build-debug/CMakeFiles/rebuild_cache.dir
