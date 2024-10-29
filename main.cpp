@@ -1,6 +1,17 @@
-#include <iostream>
+#include<iostream>
+#include<vector>
 
-int main() {
-    std::cout << "My name is Guilherme and I like marijuana!" << std::endl;
-    return 0;
-}
+class boardPin {
+    bool connected;
+    public:
+        boardPin() {
+            connected = false;
+        }
+};
+
+class logicBoard {
+    boardPin board[8][8];
+
+    public:
+
+};

@@ -157,7 +157,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=TrabalhoPP
+CMAKE_PROJECT_NAME:STATIC=firstSFML
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=C:/Users/vboxuser/Documents/mingw64/bin/ranlib.exe
@@ -250,6 +250,15 @@ TrabalhoPP_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
 TrabalhoPP_SOURCE_DIR:STATIC=C:/Users/vboxuser/CLionProjects/TrabalhoPP
+
+//Value Computed by CMake
+firstSFML_BINARY_DIR:STATIC=C:/Users/vboxuser/CLionProjects/TrabalhoPP/cmake-build-debug
+
+//Value Computed by CMake
+firstSFML_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+firstSFML_SOURCE_DIR:STATIC=C:/Users/vboxuser/CLionProjects/TrabalhoPP
 
 
 ########################
