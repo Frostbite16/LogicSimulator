@@ -16,9 +16,11 @@ protected:
     _Bit_reference getInput(size_t index);
 public:
     LogicComponent();
-    virtual void addAllInputs(size_t size) = 0;
-    virtual void changeInput(bool value, size_t index) = 0;
     virtual bool evaluate() = 0;
+    
+    void addAllInputs(size_t size);
+    void changeInput(bool value, size_t index);
+    
 
     size_t getSizeOfInputs();
     bool getOutput() const;
