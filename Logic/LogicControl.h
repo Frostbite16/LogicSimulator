@@ -1,7 +1,7 @@
 
 #ifndef LOGICCONTROL_H
 #define LOGICCONTROL_H
-#include "LogicComponent.h"
+#include "LogicComponents/LogicComponent.h"
 #include<vector>
 #include<algorithm>
 
@@ -28,7 +28,6 @@ public:
     void setInputValue(size_t index, bool value);
 
     void evaluateAllComponents();
-
 
     void removeAllComponents();
 
