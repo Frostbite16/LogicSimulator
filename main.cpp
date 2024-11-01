@@ -68,7 +68,6 @@ int main()
                 }
             }
         }
-
         // Desenhar os quadrados e bolas do grid
         window.clear();
         for (int i = 0; i < gridSize; i++) {
