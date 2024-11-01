@@ -3,3 +3,7 @@
 //
 
 #include "wire.h"
+
+bool wire::evaluate() {
+    setOutValue(getInConnection(0)->getValue());
+}

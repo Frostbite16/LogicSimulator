@@ -4,11 +4,12 @@
 
 #ifndef WIRE_H
 #define WIRE_H
+#include "LogicComponent.h"
 
 
-
-class wire {
-
+class wire:public LogicComponent{
+public:
+    bool evaluate() override;
 };
 
 
