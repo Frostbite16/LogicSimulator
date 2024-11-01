@@ -1,35 +1,72 @@
 #include "LogicComponent.h"
 
 LogicComponent::LogicComponent() {
-    output=false;
+    numInputs = 2;
+    initializeComponent();
+    outConnection = nullptr;
+    savedValue = false;
 }
 
-
-void LogicComponent::addNewInput(bool value) {
-    inputs.push_back(value);
+LogicComponent::LogicComponent(size_t numInputs): numInputs(numInputs) {
+    initializeComponent();
+    outConnection = nullptr;
+    savedValue = false;
 }
 
-_Bit_reference LogicComponent::getInput(size_t index) {
-    return inputs[index];
+void LogicComponent::addNewInConnection(LogicPoint* local) {
+    inConnections.push_back(local);
 }
 
-void LogicComponent::addAllInputs(size_t size) {
-    for(size_t i = 0; i < size; i++) {
-        addNewInput(false);
+void LogicComponent::addNewOutConnection(LogicPoint* local){
+    outConnection = local;
+}
+
+LogicPoint*& LogicComponent::getInConnection(size_t index){
+    return inConnections[index];
+}
+
+LogicPoint*& LogicComponent::getOutConnection() {
+    return outConnection;
+}
+
+void LogicComponent::setOutValue(const bool value){
+    if(outConnection!=nullptr)
+        outConnection->getValue() = value;
+    savedValue = value;
+}
+
+void LogicComponent::initializeComponent() {
+    for(int i = 0; i < numInputs; i++){
+        addNewInConnection(new LogicPoint());
     }
 }
 
-void LogicComponent::changeInput(bool value, size_t index) {
-    getInput(index) = value;
+void LogicComponent::connectInput(LogicPoint *local, const size_t index){
+    inConnections[index] = local;
 }
 
-size_t LogicComponent::getSizeOfInputs() {
-    return inputs.size();
+void LogicComponent::connectOutput(LogicPoint *local){
+    local->changeValue(savedValue);
+    outConnection = local;
 }
 
 
-
-bool LogicComponent::getOutput() const {
-    return output;
+bool LogicComponent::getOutValue() const{
+    return outConnection->getValue();
 }
 
+bool LogicComponent::searchInConnection(const LogicPoint* local) {
+    if(find(inConnections.begin(), inConnections.end(), local) != inConnections.end())
+        return true;
+    return false;
+}
+
+size_t LogicComponent::getInConnectionSize() const{
+    return inConnections.size();
+}
+
+LogicComponent::~LogicComponent() {
+    for(const auto & inConnection : inConnections) {
+        delete inConnection;
+    }
+}
