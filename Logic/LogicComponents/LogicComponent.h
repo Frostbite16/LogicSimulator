@@ -2,29 +2,35 @@
 #define LOGICCOMPONENT_H
 
 #include<vector>
+#include<algorithm>
+
+#include "LogicPoint.h"
 
 using namespace std;
 
-class LogicComponent {
-    vector<bool> inputs;
-    bool output;
+class LogicComponent: public LogicPoint{
+    vector<LogicPoint*> inConnections;
+    LogicPoint* outConnection;
+    bool savedValue;
+    size_t numInputs;
 protected:
-    void addNewInput(bool value);
-    void setOutput(bool value) {
-        output = value;
-    }
-    _Bit_reference getInput(size_t index);
+    void addNewInConnection(LogicPoint* local);
+    void addNewOutConnection(LogicPoint* local);
+    LogicPoint*& getInConnection(size_t index);
+    LogicPoint*& getOutConnection();
+    void setOutValue(bool value);
+
 public:
     LogicComponent();
+    explicit LogicComponent(size_t numImputs);
+    void initializeComponent();
+    void connectInput(LogicPoint* local, size_t index);
+    void connectOutput(LogicPoint* local);
+    bool getOutValue() const;
+    bool searchInConnection(const LogicPoint* local);
+    size_t getInConnectionSize() const;
     virtual bool evaluate() = 0;
-    
-    void addAllInputs(size_t size);
-    void changeInput(bool value, size_t index);
-    
-
-    size_t getSizeOfInputs();
-    bool getOutput() const;
-
+    ~LogicComponent();
 };
 
 #endif //LOGICCOMPONENT_H
