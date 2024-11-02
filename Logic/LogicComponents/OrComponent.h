@@ -5,6 +5,7 @@
 
 class OrComponent:public LogicComponent{
     public:
+    OrComponent();
     bool evaluate() override;
 
 };

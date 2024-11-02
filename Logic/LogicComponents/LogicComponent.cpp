@@ -1,16 +1,19 @@
 #include "LogicComponent.h"
+#include <stdexcept>
 
 LogicComponent::LogicComponent() {
     numInputs = 2;
     initializeComponent();
     outConnection = nullptr;
     savedValue = false;
+    componentID = 0;
 }
 
 LogicComponent::LogicComponent(size_t numInputs): numInputs(numInputs) {
     initializeComponent();
     outConnection = nullptr;
     savedValue = false;
+    componentID = 0;
 }
 
 void LogicComponent::addNewInConnection(LogicPoint* local) {
@@ -22,7 +25,9 @@ void LogicComponent::addNewOutConnection(LogicPoint* local){
 }
 
 LogicPoint*& LogicComponent::getInConnection(size_t index){
-    return inConnections[index];
+    if(index < numInputs)
+        return inConnections[index];
+    throw std::out_of_range("index out of range");
 }
 
 LogicPoint*& LogicComponent::getOutConnection() {
@@ -34,6 +39,11 @@ void LogicComponent::setOutValue(const bool value){
         outConnection->getValue() = value;
     savedValue = value;
 }
+
+void LogicComponent::alterComponentID(short componentID) {
+    this->componentID = componentID;
+}
+
 
 void LogicComponent::initializeComponent() {
     for(int i = 0; i < numInputs; i++){
@@ -62,6 +72,7 @@ bool LogicComponent::searchInConnection(const LogicPoint* local) {
 }
 
 size_t LogicComponent::getInConnectionSize() const{
+
     return inConnections.size();
 }
 

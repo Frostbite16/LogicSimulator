@@ -7,8 +7,9 @@
 #include "LogicComponent.h"
 
 
-class wire:public LogicComponent{
+class Wire:public LogicComponent{
 public:
+    Wire();
     bool evaluate() override;
 };
 

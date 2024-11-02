@@ -5,10 +5,10 @@
 #include "LogicPoint.h"
 
 LogicPoint::LogicPoint() {
-    currentValue = 2;
+    currentValue = 0;
 }
 
-void LogicPoint::changeValue(bool value) {
+void LogicPoint::changeValue(const bool value) {
     currentValue = value;
 }
 
@@ -16,11 +16,11 @@ short& LogicPoint::getValue() {
     return currentValue;
 }
 
-void LogicPoint::setPosition(pair<size_t, size_t> position) {
+void LogicPoint::setPosition(const std::pair<std::size_t, std::size_t> &position) {
     this->position = position;
 }
 
-pair<size_t, size_t> LogicPoint::getPosition() {
+std::pair<std::size_t, std::size_t> LogicPoint::getPosition() {
     return position;
 }
 

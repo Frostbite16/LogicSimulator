@@ -6,19 +6,17 @@
 #define LOGICPOINT_H
 #include <vector>
 
-using namespace std;
 
 class LogicPoint {
     short currentValue;
-    pair<size_t,size_t> position;
+    std::pair<std::size_t,std::size_t> position;
     public:
     LogicPoint();
     void changeValue(bool value);
     short& getValue();
-    void setPosition(pair<size_t,size_t> position);
-    pair<size_t,size_t> getPosition();
+    void setPosition(const std::pair<std::size_t, std::size_t> &position);
+    std::pair<std::size_t,std::size_t> getPosition();
 
-    virtual ~LogicPoint();
 };
 
 

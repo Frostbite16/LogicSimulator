@@ -4,6 +4,11 @@
 
 #include "wire.h"
 
-bool wire::evaluate() {
+Wire::Wire() {
+    alterComponentID(0);
+}
+
+bool Wire::evaluate() {
     setOutValue(getInConnection(0)->getValue());
+    return true;
 }

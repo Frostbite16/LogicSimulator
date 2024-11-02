@@ -1,12 +1,17 @@
 #include "OrComponent.h"
 
+OrComponent::OrComponent() {
+    alterComponentID(2);
+}
+
+
 bool OrComponent::evaluate(){
     for(size_t i = 0; i < getInConnectionSize(); i++) {
         if((getInConnection(i)->getValue())) {
-            setOutValue(1);
-            return 1;
+            setOutValue(true);
+            return true;
         }
     }
-    setOutValue(0);
-    return 0;
+    setOutValue(false);
+    return false;
 }

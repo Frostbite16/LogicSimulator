@@ -7,6 +7,7 @@
 
 class AndComponent:public LogicComponent{
     public:
+    AndComponent();
     bool evaluate() override;
 };
 
