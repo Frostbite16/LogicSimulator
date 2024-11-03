@@ -72,8 +72,11 @@ bool LogicComponent::searchInConnection(const LogicPoint* local) {
 }
 
 size_t LogicComponent::getInConnectionSize() const{
-
     return inConnections.size();
+}
+
+short LogicComponent::getComponentID() const {
+    return componentID;
 }
 
 LogicComponent::~LogicComponent() {
