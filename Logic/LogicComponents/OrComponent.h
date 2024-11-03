@@ -5,6 +5,8 @@
 
 class OrComponent:public LogicComponent{
     public:
+    OrComponent();
+    OrComponent(size_t inputSize);
     bool evaluate() override;
 
 };

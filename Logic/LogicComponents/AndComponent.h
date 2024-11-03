@@ -7,6 +7,8 @@
 
 class AndComponent:public LogicComponent{
     public:
+    AndComponent();
+    AndComponent(size_t inputSize);
     bool evaluate() override;
 };
 

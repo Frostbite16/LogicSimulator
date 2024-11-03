@@ -2,29 +2,41 @@
 #define LOGICCOMPONENT_H
 
 #include<vector>
+#include<algorithm>
 
-using namespace std;
+#include "LogicPoint.h"
 
-class LogicComponent {
-    vector<bool> inputs;
-    bool output;
+
+class LogicComponent: public LogicPoint{ // Representa qualquer componente na simulação
+    std::vector<LogicPoint*> inConnections;
+    LogicPoint* outConnection; // Ponteiro para o elemento conectado a saida
+    bool savedValue;
+    size_t numInputs;
+    short componentID; // Diferencia o tipo de componente
 protected:
-    void addNewInput(bool value);
-    void setOutput(bool value) {
-        output = value;
-    }
-    _Bit_reference getInput(size_t index);
+    void addNewInConnection(LogicPoint* local); // Adiciona uma nova entrada lógica
+    void addNewOutConnection(LogicPoint* local); // Adiciona uma nova saida lógica
+    void setOutValue(bool value); //altera o valor da saida
+    void alterComponentID(short componentID);
+
 public:
     LogicComponent();
+    explicit LogicComponent(size_t numImputs);
+
+    LogicPoint*& getInConnection(size_t index);
+    LogicPoint*& getOutConnection();
+    void initializeComponent();
+
+    void connectInput(LogicPoint* local, size_t index) const;
+    void connectOutput(LogicPoint* local);
+    void updateInputs();
+    bool getOutValue() const;
+    bool searchInConnection(const LogicPoint* local);
+    size_t getInConnectionSize() const;
+    short getComponentID() const;
+
     virtual bool evaluate() = 0;
-    
-    void addAllInputs(size_t size);
-    void changeInput(bool value, size_t index);
-    
-
-    size_t getSizeOfInputs();
-    bool getOutput() const;
-
+    virtual ~LogicComponent();
 };
 
 #endif //LOGICCOMPONENT_H

@@ -1,35 +1,92 @@
 #include "LogicComponent.h"
+#include <stdexcept>
 
 LogicComponent::LogicComponent() {
-    output=false;
+    numInputs = 2;
+    initializeComponent();
+    outConnection = nullptr;
+    savedValue = false;
+    componentID = 0;
+}
+
+LogicComponent::LogicComponent(size_t numInputs): numInputs(numInputs) {
+    initializeComponent();
+    outConnection = nullptr;
+    savedValue = false;
+    componentID = 0;
+}
+
+void LogicComponent::addNewInConnection(LogicPoint* local) {
+    inConnections.push_back(local);
+}
+
+void LogicComponent::addNewOutConnection(LogicPoint* local){
+    outConnection = local;
+}
+
+LogicPoint*& LogicComponent::getInConnection(size_t index){
+    if(index < numInputs)
+        return inConnections[index];
+    throw std::out_of_range("index out of range");
+}
+
+LogicPoint*& LogicComponent::getOutConnection() {
+    return outConnection;
+}
+
+void LogicComponent::setOutValue(const bool value){
+    if(outConnection!=nullptr)
+        outConnection->getValue() = value;
+    savedValue = value;
+}
+
+void LogicComponent::alterComponentID(short componentID) {
+    this->componentID = componentID;
 }
 
 
-void LogicComponent::addNewInput(bool value) {
-    inputs.push_back(value);
-}
-
-_Bit_reference LogicComponent::getInput(size_t index) {
-    return inputs[index];
-}
-
-void LogicComponent::addAllInputs(size_t size) {
-    for(size_t i = 0; i < size; i++) {
-        addNewInput(false);
+void LogicComponent::initializeComponent() {
+    for(int i = 0; i < numInputs; i++){
+        addNewInConnection(new LogicPoint());
     }
 }
 
-void LogicComponent::changeInput(bool value, size_t index) {
-    getInput(index) = value;
+void LogicComponent::connectInput(LogicPoint *local, const size_t index) const{
+    *inConnections[index] = *local;
+    inConnections[index]->setConnectTo(local);
 }
 
-size_t LogicComponent::getSizeOfInputs() {
-    return inputs.size();
+void LogicComponent::connectOutput(LogicPoint *local){
+    local->changeValue(savedValue);
+    outConnection = local;
+}
+
+void LogicComponent::updateInputs(){
+    for(const auto component : inConnections)
+        component->changeValue(component->getConnectedTo()->getValue());
 }
 
 
-
-bool LogicComponent::getOutput() const {
-    return output;
+bool LogicComponent::getOutValue() const{
+    return outConnection->getValue();
 }
 
+bool LogicComponent::searchInConnection(const LogicPoint* local) {
+    if(find(inConnections.begin(), inConnections.end(), local) != inConnections.end())
+        return true;
+    return false;
+}
+
+size_t LogicComponent::getInConnectionSize() const{
+    return inConnections.size();
+}
+
+short LogicComponent::getComponentID() const {
+    return componentID;
+}
+
+LogicComponent::~LogicComponent() {
+    for(const auto & inConnection : inConnections) {
+        delete inConnection;
+    }
+}
