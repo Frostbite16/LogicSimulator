@@ -69,39 +69,38 @@ int main()
                     for (int j = 0; j < 8; j++) {
                         // Verificar se o ponto de clique está dentro da bolinha
                         if (balls[i * 8 + j].getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
-                            // Marcar a bolinha como clicada
-                            ballsClicked[i * 8 + j] = true;
-                            clickedBalls.push_back(i * 8 + j);
+                            // Verificar se a bola não foi clicada anteriormente
+                            bool alreadyClicked = false;
+                            for (int k = 0; k < clickedBalls.size(); k++) {
+                                if (clickedBalls[k] == i * 8 + j) {
+                                    alreadyClicked = true;
+                                    break;
+                                }
+                            }
+                            if (!alreadyClicked) {
+                                // Marcar a bolinha como clicada
+                                clickedBalls.push_back(i * 8 + j);
+                            }
                         }
                     }
                 }
             }
         }
+
         // Desenhar os quadrados e bolas do grid
         window.clear();
-        for (int i = 0; i < clickedBalls.size(); i++) {
-            for (int j = i + 1; j < clickedBalls.size(); j++) {
-                int ball1 = clickedBalls[i];
-                int ball2 = clickedBalls[j];
-                sf::Vertex line[] = {
-                    sf::Vertex(balls[ball1].getPosition(), sf::Color::Red),
-                    sf::Vertex(balls[ball2].getPosition(), sf::Color::Red)
-                };
-                window.draw(line, 2, sf::Lines);
-            }
-        }
         for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < 8; j++) {
-                // Verificar se a bolinha foi clicada e desenhar uma borda em volta se sim
-                if (ballsClicked[i * 8 + j]) {
-                    balls[i * 8 + j].setOutlineColor(sf::Color::Blue);
-                    balls[i * 8 + j].setOutlineThickness(2);
-                }
-                else {
-                    balls[i * 8 + j].setOutlineColor(sf::Color::Black);
-                    balls[i * 8 + j].setOutlineThickness(2);
-                }
                 window.draw(balls[i * 8 + j]);
+            }
+        }
+        if (clickedBalls.size() > 1) {
+            for (int i = 0; i < clickedBalls.size() - 1; i++) {
+                sf::Vertex line[] = {
+                    sf::Vertex(balls[clickedBalls[i]].getPosition(), sf::Color::Red),
+                    sf::Vertex(balls[clickedBalls[i + 1]].getPosition(), sf::Color::Red)
+                };
+                window.draw(line, 2, sf::Lines);
             }
         }
         window.display();
