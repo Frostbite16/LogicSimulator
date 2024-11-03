@@ -6,7 +6,18 @@
 
 LogicPoint::LogicPoint() {
     currentValue = 0;
+    connectedTo = this; // Quando um LogicPoint é criado, essa variavel aponta pra o próprio ponto
 }
+
+void LogicPoint::setConnectTo(LogicPoint* local){
+    connectedTo = local;
+}
+
+LogicPoint* LogicPoint::getConnectedTo() const{
+    return connectedTo;
+}
+
+
 
 void LogicPoint::changeValue(const bool value) {
     currentValue = value;

@@ -21,16 +21,20 @@ protected:
 
 public:
     LogicComponent();
+    explicit LogicComponent(size_t numImputs);
+
     LogicPoint*& getInConnection(size_t index);
     LogicPoint*& getOutConnection();
-    explicit LogicComponent(size_t numImputs);
     void initializeComponent();
-    void connectInput(LogicPoint* local, size_t index);
+
+    void connectInput(LogicPoint* local, size_t index) const;
     void connectOutput(LogicPoint* local);
+    void updateInputs();
     bool getOutValue() const;
     bool searchInConnection(const LogicPoint* local);
     size_t getInConnectionSize() const;
     short getComponentID() const;
+
     virtual bool evaluate() = 0;
     virtual ~LogicComponent();
 };

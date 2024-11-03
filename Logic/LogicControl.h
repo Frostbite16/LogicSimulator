@@ -15,6 +15,7 @@ class LogicControl:public LogicComponent {
     std::vector<LogicComponent*> wires;
 
     LogicComponent* searchComponent(const LogicComponent* component);
+    LogicComponent* searchWire(const LogicComponent* wire);
 
 
 public:
@@ -38,6 +39,7 @@ public:
 
     void setInputValue(size_t index, bool value);
 
+    void evaluateWires();
     bool evaluate() override;
 
     void removeAllComponents();

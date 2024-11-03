@@ -10,6 +10,15 @@ LogicComponent* LogicControl::searchComponent(const LogicComponent* component) {
     return *it;
 }
 
+LogicComponent *LogicControl::searchWire(const LogicComponent *wire) {
+    const auto it = find(wires.begin(), wires.end(), wire);
+    if(it == wires.end()) {
+        throw std::invalid_argument("Component not found");
+    }
+    return *it;
+}
+
+
 LogicControl::LogicControl(){
     for(size_t i=0; i<8; ++i) {
         for(size_t j=0; j<8; ++j) {
@@ -63,19 +72,19 @@ void LogicControl::connectOutputToInput(const LogicComponent* component1, const 
 }
 
 void LogicControl::connectWireInputToMat(const LogicComponent *wire, const std::pair<size_t, size_t> &position) {
-    LogicComponent* pointerToWire = searchComponent(wire);
+    LogicComponent* pointerToWire = searchWire(wire);
     if(position.first < 8 && position.second < 8)
         pointerToWire->connectInput(&pointMat[position.first][position.second],0);
 }
 
 void LogicControl::connectWireOutToMat(const LogicComponent *wire, const std::pair<size_t, size_t> &position) {
-    LogicComponent* pointerToWire = searchComponent(wire);
+    LogicComponent* pointerToWire = searchWire(wire);
     if(position.first < 8 && position.second < 8)
         pointerToWire->connectOutput(&pointMat[position.first][position.second]);
 }
 
 void LogicControl::connectWireToInput(const LogicComponent *wire, const LogicComponent *component, size_t inputIndex) {
-    LogicComponent* pointerToWire = searchComponent(wire);
+    LogicComponent* pointerToWire = searchWire(wire);
     LogicComponent* pointerToComponent = searchComponent(component);
 
     pointerToWire->connectOutput(pointerToComponent->getInConnection(inputIndex));
@@ -94,16 +103,22 @@ void LogicControl::connectOutputToArr(const LogicComponent* component, const siz
 }
 
 void LogicControl::connectWireInToArr(const LogicComponent *wire, size_t position) {
-    LogicComponent* pointerToWire = searchComponent(wire);
+    LogicComponent* pointerToWire = searchWire(wire);
     if(position < 8)
-        pointerToWire->connectInput(&outputArr[position],0);
+        pointerToWire->connectInput(&inputArr[position],0);
 }
 
 void LogicControl::connectWireOutToArr(const LogicComponent *wire, size_t position) {
-    LogicComponent* pointerToWire = searchComponent(wire);
+    LogicComponent* pointerToWire = searchWire(wire);
     if(position < 8)
         pointerToWire->connectOutput(&outputArr[position]);
 }
+
+void LogicControl::evaluateWires() {
+    for(const auto &wire : wires)
+        wire->evaluate();
+}
+
 
 bool LogicControl::evaluate() {
     for(const auto &component : currentComponents)

@@ -51,13 +51,19 @@ void LogicComponent::initializeComponent() {
     }
 }
 
-void LogicComponent::connectInput(LogicPoint *local, const size_t index){
-    inConnections[index] = local;
+void LogicComponent::connectInput(LogicPoint *local, const size_t index) const{
+    *inConnections[index] = *local;
+    inConnections[index]->setConnectTo(local);
 }
 
 void LogicComponent::connectOutput(LogicPoint *local){
     local->changeValue(savedValue);
     outConnection = local;
+}
+
+void LogicComponent::updateInputs(){
+    for(const auto component : inConnections)
+        component->changeValue(component->getConnectedTo()->getValue());
 }
 
 

@@ -10,7 +10,12 @@
 class LogicPoint {
     short currentValue;
     std::pair<std::size_t,std::size_t> position;
-    public:
+    LogicPoint* connectedTo;
+
+
+public:
+    void setConnectTo(LogicPoint* local);
+    LogicPoint* getConnectedTo() const;
     LogicPoint();
     void changeValue(bool value);
     short& getValue();

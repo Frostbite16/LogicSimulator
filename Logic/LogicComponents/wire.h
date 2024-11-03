@@ -10,6 +10,7 @@
 class Wire:public LogicComponent{
 public:
     Wire();
+    Wire(std::size_t inputSize);
     bool evaluate() override;
 };
 
